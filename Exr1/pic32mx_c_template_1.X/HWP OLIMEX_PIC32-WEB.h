@@ -97,8 +97,8 @@
 	#define	BUTTON1_IO			(PORTDbits.RD7)
 	#define BUTTON2_TRIS		(TRISDbits.TRISD13)	// Ref SW3
 	#define	BUTTON2_IO			(PORTDbits.RD13)
-	#define BUTTON3_TRIS		(TRISDbits.TRISD13)	// No BUTTON3 on this board
-	#define	BUTTON3_IO			(1)
+//	#define BUTTON3_TRIS		(TRISDbits.TRISD13)	// No BUTTON3 on this board
+//	#define	BUTTON3_IO			(1)
     
     // UART configuration (not too important since we don't have a UART 
     // connector attached normally, but needed to compile if the STACK_USE_UART 

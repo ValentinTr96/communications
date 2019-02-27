@@ -14,15 +14,15 @@
 #include "Tick.h" 
 #include "HWP OLIMEX_PIC32-WEB.h"
 
-/******************************************************************************/
-/* Global Variable Declaration                                                */
-/******************************************************************************/
 
-/* i.e. uint32_t <variable_name>; */
+//#define PROBLEM1
+#define PROBLEM2    
 
-/******************************************************************************/
-/* Main Program                                                               */
-/******************************************************************************/
+void delay(uint32_t period)
+{
+    int i;
+    for(i = 0 ; i < period ; i++);
+}
 
 int32_t main(void)
 {
@@ -68,18 +68,54 @@ int32_t main(void)
     LED1_IO = 1; // I/O register LED 2
     LED2_IO = 1; // I/O register LED 3
     BUTTON0_TRIS = 1; // Button 1 data direction register
-    static DWORD ticksCount = 0;
-    static DWORD t = 0;
-    static DWORD tRes = 0;
-    int i;
-    int but;
+    BUTTON1_TRIS = 1; // Button 1 data direction register
+    BUTTON2_TRIS = 1; // Button 1 data direction register
     TickInit();
-//    DoUARTConfig();
     while(1)
     {
-        for(i=0; i<40000; i++);
-        mPORTDToggleBits(BIT_0);
-        mPORTDToggleBits(BIT_1);
-        mPORTDToggleBits(BIT_2);
-    }
+
+#ifdef PROBLEM1
+        /* problem 1 
+         80MHz clock frequency
+         1 / 80MHz = period of a single CPU instruction
+         250ms desired period
+         250 / ( 1/80MHz ) gives us the desired delay*/
+        delay(2000000);
+            mPORTDToggleBits(BIT_0);
+            mPORTDToggleBits(BIT_1);
+            mPORTDToggleBits(BIT_2);
+#endif
+            
+#ifdef PROBLEM2
+        while(1)
+        {
+            if (BUTTON0_IO == 0)
+            {
+             delay(2);
+             if (BUTTON0_IO == 0)
+             {
+              mPORTDToggleBits(BIT_0);  
+             }
+            }
+            if (BUTTON1_IO == 0)
+            {
+                delay(2);
+              if (BUTTON1_IO == 0)
+              {
+                mPORTDToggleBits(BIT_1);  
+              }
+            }
+
+            if (BUTTON2_IO == 0)
+            {
+                delay(2);
+              if (BUTTON2_IO == 0)
+              {
+                mPORTDToggleBits(BIT_2);  
+              }
+            }
+        }
+#endif
+
+        }        
 }
